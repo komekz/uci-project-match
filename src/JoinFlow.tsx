@@ -29,7 +29,7 @@ const empty: FormData = {
   preferredName: "", email: "", major: "", year: "",
   interests: [], skills: [], wantToLearn: "",
   weeklyHours: "", projectDuration: "", commitmentStyle: "", projectType: "", motivation: [],
-  hasProjectIdea: false, projectDescription: "", lookingFor: "",
+  hasProjectIdea: true, projectDescription: "", lookingFor: "",
   bio: "",
 };
 
