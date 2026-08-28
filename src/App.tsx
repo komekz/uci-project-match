@@ -106,7 +106,7 @@ function Hero({ onJoin }: { onJoin: () => void }) {
         <button onClick={onJoin} className="inline-block bg-indigo-600 text-white font-medium px-5 py-2.5 rounded-md text-sm hover:bg-indigo-700">
           Find my matches
         </button>
-        <p className="text-xs text-gray-400 mt-3">Early pilot for UCI students · Contact info only shared after a mutual match</p>
+        <p className="text-xs text-gray-400 mt-3">For UCI students · Contact info only shared after a mutual match</p>
       </div>
 
       <div className="max-w-sm">
@@ -166,13 +166,13 @@ function About() {
   return (
     <section id="about" className="border-t border-gray-200 bg-gray-50">
       <div className="max-w-4xl mx-auto px-5 py-14">
-        <h2 className="text-xl font-semibold text-gray-900 mb-4">About this pilot</h2>
+        <h2 className="text-xl font-semibold text-gray-900 mb-4">Why I made this</h2>
         <div className="max-w-lg space-y-4 text-gray-500 text-sm leading-relaxed">
           <p>
-            I'm an incoming UCI Electrical Engineering transfer, and I thought that a tool like this might be useful to engineering/cs students, especially those who are looking for like minded people to work on projects with.
+            I'm an incoming UCI Electrical Engineering transfer, I've found that starting new projects can be quite daunting, and finding like minded people to stay motivated and work with isn't easy either.
           </p>
           <p>
-            But before actually building the app, I'm using this to gauge interest and get a better understanding of what is actually useful.
+            I thought a tool like this might help, but building the full app isn't particularly straightforward, so I'm just using this to try out the idea first and see if it's actually useful.
           </p>
           <p className="text-gray-400 text-xs">UCI EE Transfer · Class of 2028</p>
         </div>
@@ -200,7 +200,7 @@ function Footer() {
     <footer className="border-t border-gray-200">
       <div className="max-w-4xl mx-auto px-5 py-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
         <span className="text-sm font-medium text-gray-700">UCI Project Match</span>
-        <p className="text-xs text-gray-400">Independent student experiment. Not affiliated with UC Irvine.</p>
+        <p className="text-xs text-gray-400">Student made · Not affiliated with UC Irvine.</p>
       </div>
     </footer>
   );
