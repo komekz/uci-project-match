@@ -1,0 +1,10 @@
+{
+  "description": "Connect with fellow UCI engineering and CS students to find project partners based on shared interests, skills, and commitment levels.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
