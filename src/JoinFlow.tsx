@@ -541,9 +541,9 @@ function SuccessScreen({ onBack }: { onBack: () => void }) {
       </nav>
       <div className="flex-1 flex items-start justify-center px-5 pt-20">
         <div className="max-w-md w-full">
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">You're in.</h1>
+          <h1 className="text-3xl font-bold text-gray-900 mb-4">All set!</h1>
           <p className="text-gray-500 text-sm leading-relaxed mb-8">
-            We'll look for students whose interests, skills, and commitment might make them good project teammates. If we find a promising match, we'll email you their profile and explain why we matched you.
+            Your profile will be compared with other students based on interests, skills, and availability. If there is a good match, you will get an email with their profile and why you were matched.
           </p>
           <button onClick={onBack} className="text-sm text-indigo-600 hover:underline">
             ← Back to home
