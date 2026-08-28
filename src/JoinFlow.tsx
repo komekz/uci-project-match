@@ -599,7 +599,7 @@ export default function JoinFlow({ onBack }: { onBack: () => void }) {
       if (e) {
         setSubmitted(true);
       } else {
-        window.alert("submission failed, check console");
+        window.alert("submission failed, please try again");
       }
     })
   }
