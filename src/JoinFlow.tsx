@@ -1,11 +1,13 @@
 import { useState } from "react";
+import { add_profile } from "./supaclient"
+import type { NewProfile } from "./supaclient";
 
 /* ─── Types ─── */
 
 type Skill = { name: string; level: string };
 
 type FormData = {
-  firstName: string;
+  preferredName: string;
   email: string;
   major: string;
   year: string;
@@ -17,17 +19,17 @@ type FormData = {
   commitmentStyle: string;
   projectType: string;
   motivation: string[];
-  hasProjectIdea: string;
+  hasProjectIdea: boolean;
   projectDescription: string;
   lookingFor: string;
   bio: string;
 };
 
 const empty: FormData = {
-  firstName: "", email: "", major: "", year: "",
+  preferredName: "", email: "", major: "", year: "",
   interests: [], skills: [], wantToLearn: "",
   weeklyHours: "", projectDuration: "", commitmentStyle: "", projectType: "", motivation: [],
-  hasProjectIdea: "", projectDescription: "", lookingFor: "",
+  hasProjectIdea: false, projectDescription: "", lookingFor: "",
   bio: "",
 };
 
@@ -122,8 +124,8 @@ function Step1({ data, set }: { data: FormData; set: (d: Partial<FormData>) => v
 
       <div className="grid sm:grid-cols-2 gap-4">
         <div>
-          <Label>First name</Label>
-          <TextInput value={data.firstName} onChange={v => set({ firstName: v })} placeholder="Alex" />
+          <Label>Preferred Name</Label>
+          <TextInput value={data.preferredName} onChange={v => set({ preferredName: v })} placeholder="Alex" />
         </div>
         <div>
           <Label>UCI email</Label>
@@ -355,18 +357,18 @@ function Step5({ data, set }: { data: FormData; set: (d: Partial<FormData>) => v
         <RadioCard
           title="I already have an idea"
           description="I have something I want to build and need people to work with."
-          selected={data.hasProjectIdea === "yes"}
-          onClick={() => set({ hasProjectIdea: "yes" })}
+          selected={data.hasProjectIdea === true}
+          onClick={() => set({ hasProjectIdea: true })}
         />
         <RadioCard
           title="I just want to build something"
           description="I don't have a specific idea yet. Match me with people with similar interests."
-          selected={data.hasProjectIdea === "no"}
-          onClick={() => set({ hasProjectIdea: "no" })}
+          selected={data.hasProjectIdea === false}
+          onClick={() => set({ hasProjectIdea: false })}
         />
       </div>
 
-      {data.hasProjectIdea === "yes" && (
+      {data.hasProjectIdea === true && (
         <div className="space-y-4 pt-1">
           <div>
             <Label>Describe your project</Label>
@@ -459,7 +461,7 @@ function Step7({ data }: { data: FormData }) {
       <div className="border border-gray-200 rounded-md divide-y divide-gray-100">
         <SummarySection title="About you">
           <div className="space-y-1">
-            <SummaryRow label="Name" value={data.firstName} />
+            <SummaryRow label="Name" value={data.preferredName} />
             <SummaryRow label="Email" value={data.email} />
             <SummaryRow label="Major" value={data.major} />
             <SummaryRow label="Year" value={data.year} />
@@ -497,12 +499,12 @@ function Step7({ data }: { data: FormData }) {
 
         <SummarySection title="Project idea">
           <div className="text-sm text-gray-800">
-            {data.hasProjectIdea === "yes" ? "Has an idea" : data.hasProjectIdea === "no" ? "Looking to join something" : "—"}
+            {data.hasProjectIdea === true ? "Has an idea" : data.hasProjectIdea === false ? "Looking to join something" : "—"}
           </div>
-          {data.hasProjectIdea === "yes" && data.projectDescription && (
+          {data.hasProjectIdea === true && data.projectDescription && (
             <p className="text-sm text-gray-600 mt-1">{data.projectDescription}</p>
           )}
-          {data.hasProjectIdea === "yes" && data.lookingFor && (
+          {data.hasProjectIdea === true && data.lookingFor && (
             <div className="text-sm text-gray-500 mt-1">
               <span className="text-gray-400">Looking for: </span>{data.lookingFor}
             </div>
@@ -574,6 +576,34 @@ export default function JoinFlow({ onBack }: { onBack: () => void }) {
     else onBack();
   }
 
+  function submitForm(data: FormData) {
+    const profile: NewProfile = {
+      bio: data.bio,
+      commitment_level: data.commitmentStyle,
+      desired_teammate_skills: data.lookingFor,
+      email: data.email,
+      has_project_idea: data.hasProjectIdea,
+      interests: data.interests,
+      major: data.major,
+      motivations: data.motivation,
+      preferred_name: data.preferredName,
+      project_description: data.projectDescription,
+      project_duration: data.projectDuration,
+      project_type: data.projectType,
+      skills: data.skills,
+      skills_to_learn: data.wantToLearn,
+      time_commitment: data.weeklyHours,
+      year: data.year
+    };
+    add_profile(profile).then(e => {
+      if (e) {
+        setSubmitted(true);
+      } else {
+        window.alert("submission failed, check console");
+      }
+    })
+  }
+
   if (submitted) return <SuccessScreen onBack={onBack} />;
 
   const progress = (step / TOTAL) * 100;
@@ -617,7 +647,7 @@ export default function JoinFlow({ onBack }: { onBack: () => void }) {
               Next
             </button>
           ) : (
-            <button type="button" onClick={() => setSubmitted(true)}
+            <button type="button" onClick={() => submitForm(data)}
               className="bg-indigo-600 text-white text-sm font-medium px-5 py-2 rounded-md hover:bg-indigo-700">
               Find my matches
             </button>
